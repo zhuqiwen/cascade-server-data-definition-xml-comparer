@@ -1,0 +1,24 @@
+{
+  "name": "iu-rsb/compare-xml",
+  "description": "Compares 2 SimpleXml objects regardless of the order of nodes and attributes",
+  "type": "library",
+  "license": "GPL-3.0-only",
+  "authors": [
+    {
+      "name": "Qiwen Zhu",
+      "email": "qiwzhu@iu.edu"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Edu\\IU\\RSB\\XmlComparer\\": "src"
+    }
+  },
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=7.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9"
+  }
+}
