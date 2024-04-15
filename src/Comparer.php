@@ -5,6 +5,7 @@ namespace Edu\IU\RSB\XmlComparer;
 use Edu\IU\RSB\XmlComparer\Exceptions\AttributesNotMatchException;
 use Edu\IU\RSB\XmlComparer\Exceptions\ChildMissingException;
 use Edu\IU\RSB\XmlComparer\Exceptions\ChildrenCountsNotMatchException;
+use Edu\IU\RSB\XmlComparer\Exceptions\RootNameNotMatchException;
 use Edu\IU\RSB\XmlComparer\Exceptions\SameNameChildrenCountNotMatchException;
 use Edu\IU\RSB\XmlComparer\Exceptions\XmlComparerException;
 use Edu\IU\RSB\XmlComparer\Traits\Traits;
@@ -30,7 +31,7 @@ class Comparer{
     {
         try {
             $this->compareResult = $this->simpleXmlElementsAreEqual($this->xmlObjOld, $this->xmlObjNew);
-        }catch (XmlComparerException $e) {
+        }catch (XmlComparerException | RootNameNotMatchException $e) {
             $this->compareResult = false;
             $this->reasons['reason'] = $e->getMessage();
             $this->reasons['parentPath'] = $this->parentPath;
@@ -46,6 +47,10 @@ class Comparer{
      */
     public function simpleXmlElementsAreEqual(\SimpleXMLElement $xmlObjOld, \SimpleXMLElement $xmlObjNew):true
     {
+
+        if($xmlObjOld->getName() != $xmlObjNew->getName()){
+            throw new RootNameNotMatchException($xmlObjOld, $xmlObjNew);
+        }
         //if attributes match
         if(!$this->equalAttributes($xmlObjOld, $xmlObjNew)){
             throw new AttributesNotMatchException($xmlObjOld, $xmlObjNew);
